@@ -13,8 +13,15 @@ class CreateUser extends CreateRecord
     protected static string $resource = UserResource::class;
 
     public function create(bool $another = false): void{
-        $panel = Panel::authorize(Filament::auth()->user()->panel_username, Filament::auth()->user()->panel_password);
-        $panel->createUser($this->data['username']);
+        try {
+            $panel = Panel::marzban();
+            $panel->createUser($this->data['username']);
+            $this->notify('success', 'User created successfully.');
+            $this->halt();
+            $this->redirect($this->getRedirectUrl());
+        } catch (\Throwable $e) {
+            $this->notify('danger', 'Error creating user: ' . $e->getMessage());
+        }
     }
 
 }

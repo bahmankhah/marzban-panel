@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('panel_username')->unique();
-            $table->stirng('panel_password')->nullable();
+            $table->string('panel_username')->nullable()->unique();
+            $table->string('panel_password')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('reseller');
